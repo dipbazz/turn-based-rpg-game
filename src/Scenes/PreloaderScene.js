@@ -1,21 +1,22 @@
 import 'phaser';
+import config from '../Config/config';
 
 export default class PreloaderScene extends Phaser.Scene {
   preload () {
-    let progressBar = this.add.graphics();
-    let progressBox = this.add.graphics();
-    progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect(240, 270, 320, 50);
+    let width = config.scale.width;
+    let height = config.scale.height;
 
-    let width = this.cameras.main.width;
-    let height = this.cameras.main.height;
+    let progressBox = this.add.graphics();
+    let progressBar = this.add.graphics();
+    progressBox.fillStyle(0x222222, 1);
+    progressBox.fillRect(width/2 - 75, height/2 - 15, 150, 24);
 
     let loadingText = this.make.text({
       x: width / 2,
-      y: height / 2 - 50,
+      y: height / 2 - 30,
       text: 'Loading ...',
       style: {
-        font: '20px monospace',
+        font: '15px monospace',
         fill: '#ffffff'
       }
     });
@@ -23,10 +24,10 @@ export default class PreloaderScene extends Phaser.Scene {
 
     let percentText = this.make.text({
       x: width/2,
-      y: height / 2 - 5,
+      y: height / 2 - 4,
       text: '0%',
       style: {
-        font:'18px monospace',
+        font:'14px monospace',
         fill: '#ffffff'
       }
     });
@@ -34,10 +35,10 @@ export default class PreloaderScene extends Phaser.Scene {
 
     var assetText = this.make.text({
       x: width / 2,
-      y: height / 2 + 50,
+      y: height / 2 + 30,
       text: '',
       style: {
-        font: '18px monospace',
+        font: '14px monospace',
         fill: '#ffffff'
       }
     });
@@ -46,8 +47,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.on('progress', function (value) {
       percentText.setText(parseInt(value* 100) + '%');
       progressBar.clear();
-      progressBar.fillStyle(0xffffff, 1);
-      progressBar.fillRect(250, 280, 300 * value, 30);
+      progressBar.fillStyle(0x159cef, 1);
+      progressBar.fillRect(width/2 + 2.5 - 75, height/2 + 2 -15, 145 * value, 20);
     });
 
     this.load.on('fileprogress', function (file) {
@@ -69,7 +70,10 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.tilemapTiledJSON('map', 'assets/map/map.json');
 
     // our two characters
-    this.load.spritesheet('player', 'assets/RPG_assets.png', { frameWidth: 16, frameHeight: 1})
+    this.load.spritesheet('player', 'assets/RPG_assets.png', { frameWidth: 16, frameHeight: 16})
+
+    this.load.image('blueButton1', 'assets/ui/blue_button02.png');
+    this.load.image('blueButton2', 'assets/ui/blue_button03.png');
   }
 
   create () {
