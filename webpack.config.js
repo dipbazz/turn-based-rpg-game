@@ -20,7 +20,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env']
+            presets: ["@babel/preset-env"]
           }
         }
       }
@@ -29,18 +29,19 @@ module.exports = {
 
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
-    compress: true
+    compress: true,
+    liveReload: true
   },
 
   plugins: [
-    // new CopyWebpackPlugin({
-    //   patterns: [
-    //     {
-    //       from: 'src/assets/',
-    //       to: 'dist'
-    //     }
-    //   ]
-    // }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'src/assets'),
+          to: path.resolve(__dirname, 'dist/assets')
+        }
+      ]
+    }),
 
     new webpack.DefinePlugin({
       'typeof WEBGL_RENDERER': JSON.stringify(true)
