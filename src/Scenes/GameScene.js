@@ -73,6 +73,8 @@ export default class GameScene extends Phaser.Scene {
 
     this.cameras.main.flash(100);
 
+    this.scene.start('Battle');
+
   }
 
   update () {
