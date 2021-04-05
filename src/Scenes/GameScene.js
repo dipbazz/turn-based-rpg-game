@@ -65,15 +65,23 @@ export default class GameScene extends Phaser.Scene {
     }
 
     this.physics.add.overlap(this.player, this.spawns, this.onMeetEnemy, false, this);
+    this.sys.events.on('wake', this.wake, this);
+  }
+
+  wake() {
+    this.cursors.left.reset();
+    this.cursors.right.reset();
+    this.cursors.up.reset();
+    this.cursors.down.reset();
   }
 
   onMeetEnemy (player, zone) {
     zone.x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
     zone.y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
 
-    this.cameras.main.flash(100);
+    this.cameras.main.shake(300);
 
-    this.scene.start('Battle');
+    this.scene.switch('Battle');
 
   }
 
